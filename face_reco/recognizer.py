@@ -6,7 +6,10 @@ known_faces_dir = os.path.join(os.path.dirname(__file__), 'known_faces')
 known_encodings = []
 known_names = []
 
-# Load known face encodings
+
+# Carga los "encodings faciales"
+# face_reco/known_faces/imagenes.jpg // .png
+
 for filename in os.listdir(known_faces_dir):
     if filename.endswith(".jpg") or filename.endswith(".png"):
         image_path = os.path.join(known_faces_dir, filename)
@@ -17,6 +20,8 @@ for filename in os.listdir(known_faces_dir):
             known_names.append(os.path.splitext(filename)[0])
 
 
+
+# Genera la transimison de video 
 def generate_video_stream():
     camera = cv2.VideoCapture(0)
 
@@ -37,7 +42,7 @@ def generate_video_stream():
 
         for face_encoding, location in zip(face_encodings, face_locations):
             matches = face_recognition.compare_faces(known_encodings, face_encoding)
-            name = "Unknown"
+            name = "Desconocido"
 
             if True in matches:
                 match_index = matches.index(True)

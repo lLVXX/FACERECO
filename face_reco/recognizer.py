@@ -1,28 +1,30 @@
 import cv2
 import face_recognition
-import os
+from core.models import Student
+from django.core.files.storage import default_storage
 
-known_faces_dir = os.path.join(os.path.dirname(__file__), 'known_faces')
 known_encodings = []
 known_names = []
 
+def load_known_faces_from_db():
+    global known_encodings, known_names
+    known_encodings.clear()
+    known_names.clear()
 
-# Carga los "encodings faciales"
-# face_reco/known_faces/imagenes.jpg // .png
+    students = Student.objects.all()
 
-for filename in os.listdir(known_faces_dir):
-    if filename.endswith(".jpg") or filename.endswith(".png"):
-        image_path = os.path.join(known_faces_dir, filename)
-        image = face_recognition.load_image_file(image_path)
-        encodings = face_recognition.face_encodings(image)
-        if encodings:
-            known_encodings.append(encodings[0])
-            known_names.append(os.path.splitext(filename)[0])
+    for student in students:
+        if student.photo:
+            with default_storage.open(student.photo.name, 'rb') as image_file:
+                image = face_recognition.load_image_file(image_file)
+                encodings = face_recognition.face_encodings(image)
+                if encodings:
+                    known_encodings.append(encodings[0])
+                    full_name = f"{student.first_name} {student.name}"
+                    known_names.append(full_name)
 
-
-
-# Genera la transimison de video 
 def generate_video_stream():
+    load_known_faces_from_db()
     camera = cv2.VideoCapture(0)
 
     if not camera.isOpened():
@@ -33,7 +35,6 @@ def generate_video_stream():
         if not success:
             break
 
-        # Resize and convert to RGB
         small_frame = cv2.resize(frame, (0, 0), fx=0.25, fy=0.25)
         rgb_frame = cv2.cvtColor(small_frame, cv2.COLOR_BGR2RGB)
 

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Elegir Clase</title>
+</head>
+<body>
+    <h1>Selecciona una clase para iniciar</h1>
+    <ul>
+        {% for asignatura in asignaturas %}
+            <li>
+                <a href="{% url 'clase_view' asignatura.id %}">
+                    {{ asignatura.nombre }} - {{ asignatura.horario }}
+                </a>
+            </li>
+        {% empty %}
+            <li>No hay asignaturas registradas.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

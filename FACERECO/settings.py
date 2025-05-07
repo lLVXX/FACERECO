@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'FACERECO.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'face_reco_db',
+        'NAME': 'FReco_db',
         'USER': 'postgres',
         'PASSWORD': '12345678',
         'HOST': 'localhost',

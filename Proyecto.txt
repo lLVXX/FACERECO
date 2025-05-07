@@ -314,3 +314,9 @@ core/template/core/stream.html
 
 
 
+####################3
+
+Quiero que el estudiante sea considerado presente , con un minimo 45% del bloque , quiero la opcion de editar los reportes , umplica agregar validacion manual posterior , quiero que continuemos afinando la logica , quiero que me digas como funciona el proyecto desde 0 antes de continuar afinando !
+
+
+########################3

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Clase - {{ asignatura.nombre }}</title>
+</head>
+<body>
+    <h1>Clase: {{ asignatura.nombre }}</h1>
+    <p><strong>Horario:</strong> {{ asignatura.horario }}</p>
+    <p><strong>Sede:</strong> {{ asignatura.sede.nombre }}</p>
+
+    <h2>Profesor(es):</h2>
+    <ul>
+        {% for prof in profesores %}
+            <li>{{ prof.profesor.nombre }} - {{ prof.profesor.correo }}</li>
+        {% empty %}
+            <li>No hay profesor asignado</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Reconocimiento facial en tiempo real</h2>
+    <img src="{% url 'video_feed' %}" width="720" height="560">
+</body>
+</html>
